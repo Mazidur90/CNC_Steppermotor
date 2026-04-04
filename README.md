@@ -20,6 +20,44 @@ This repository is structured like a small **firmware product**: shared protocol
 
 ---
 
+## System Architecture
+
+```mermaid
+flowchart LR
+  subgraph Master Node
+    UI[Serial UI / Host]
+    CAN_M[CAN 2.0A]
+    UI --> CAN_M
+  end
+  subgraph CAN Bus [500 kbit/s]
+    BUS((Bus))
+  end
+  subgraph Slave Node
+    CAN_S[CAN Receiver]
+    MOTOR[AccelStepper]
+    IO[Limits / Spindle]
+    CAN_S --> MOTOR
+    CAN_S --> IO
+  end
+  CAN_M <--> BUS <--> CAN_S
+```
+
+## Typical Command Flow
+
+```mermaid
+sequenceDiagram
+    participant Master
+    participant Slave
+    participant Motor
+    Master->>Slave: 0x100 (Relative Move: +10 revs)
+    Slave->>Motor: Start Stepping
+    loop Every 250ms
+        Slave->>Master: 0x200 (STATUS: Moving, Pos=X)
+    end
+    Motor-->>Slave: Target Reached
+    Slave->>Master: 0x200 (STATUS: Stopped, Pos=Y)
+```
+
 ## What this project does (summary)
 
 | Area | Behavior |

@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "author": "CNC_Steppermotor Prototype",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "wokwi-arduino-mega",
+      "id": "slave",
+      "top": 20,
+      "left": 0,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-a4988",
+      "id": "driver1",
+      "top": 300,
+      "left": 380,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-stepper-motor",
+      "id": "motor1",
+      "top": 460,
+      "left": 360,
+      "attrs": {
+        "size": "17",
+        "display": "angle",
+        "arrow": "orange"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led_slave",
+      "top": -30,
+      "left": 60,
+      "attrs": { "color": "red" }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn_home",
+      "top": 300,
+      "left": 600,
+      "attrs": { "color": "green" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r_led",
+      "top": -30,
+      "left": 120,
+      "attrs": { "value": "220" }
+    }
+  ],
+  "connections": [
+    ["slave:5",         "driver1:STEP",   "green",  []],
+    ["slave:6",         "driver1:DIR",    "blue",   []],
+    ["slave:7",         "driver1:ENABLE", "orange", []],
+    ["slave:GND.1",     "driver1:GND",    "black",  []],
+    ["slave:5V",        "driver1:VDD",    "red",    []],
+    ["driver1:SLEEP",   "driver1:RESET",  "purple", []],
+    ["driver1:1A",      "motor1:A+",      "yellow", []],
+    ["driver1:1B",      "motor1:A-",      "yellow", []],
+    ["driver1:2A",      "motor1:B+",      "white",  []],
+    ["driver1:2B",      "motor1:B-",      "white",  []],
+    ["slave:GND.2",     "motor1:GND",     "black",  []],
+    ["slave:5V",        "motor1:VCC",     "red",    []],
+    ["slave:13",        "r_led:1",        "red",    []],
+    ["r_led:2",         "led_slave:A",    "red",    []],
+    ["slave:GND.3",     "led_slave:K",    "black",  []],
+    ["slave:3",         "btn_home:1.l",   "purple", []],
+    ["slave:GND.4",     "btn_home:2.l",   "black",  []]
+  ],
+  "dependencies": {}
+}

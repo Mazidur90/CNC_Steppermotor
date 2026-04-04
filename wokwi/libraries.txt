@@ -1,0 +1,8 @@
+# Wokwi Library Dependencies
+# -------------------------------------------------------
+# CAN bus via MCP2515 — autowp library (header: mcp2515.h)
+# Arduino Library Manager name: "MCP2515" by autowp
+MCP2515
+
+# Stepper motor STEP/DIR control with acceleration profiles
+AccelStepper

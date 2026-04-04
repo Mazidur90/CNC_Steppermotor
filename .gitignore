@@ -1,19 +1,17 @@
-# Arduino build output
+# Arduino / IDE
 build/
-*.elf
 *.hex
+*.elf
 *.bin
-*.map
+*.o
+*.a
 
-# VS Code
-.vscode/
-
-# Wokwi local cache
-.wokwi/
-
-# Claude Code internal settings
-.claude/
-
-# Windows
+# OS
+.DS_Store
 Thumbs.db
-desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*~

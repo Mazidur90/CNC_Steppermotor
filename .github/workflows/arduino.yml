@@ -1,0 +1,34 @@
+# Compile-check firmware on push / PR (no hardware required)
+name: Arduino CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Arduino CLI
+        uses: arduino/setup-arduino-cli@v2
+        with:
+          version: 0.35.3
+
+      - name: Install AVR core
+        run: arduino-cli core update-index && arduino-cli core install arduino:avr
+
+      - name: Install libraries
+        run: |
+          arduino-cli lib install AccelStepper
+          arduino-cli lib install --git-url https://github.com/autowp/arduino-mcp2515.git
+
+      - name: Compile master (ATmega2560)
+        run: arduino-cli compile --verbose --fqbn arduino:avr:mega:cpu=atmega2560 master
+
+      - name: Compile slave (ATmega328P)
+        run: arduino-cli compile --verbose --fqbn arduino:avr:uno slave
